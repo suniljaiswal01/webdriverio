@@ -3,17 +3,11 @@ import path from 'path'
 import atob from 'atob'
 import minimatch from 'minimatch'
 
+import Interception from './'
 import { containsObject, canAccess } from '..'
 import { ERROR_REASON } from '../../constants'
 
-export default class DevtoolsInterception {
-    constructor (url, filterOptions = {}) {
-        this.url = url
-        this.filterOptions = filterOptions
-        this.respondOverwrites = []
-        this.matches = []
-    }
-
+export default class DevtoolsInterception extends Interception {
     static handleRequestInterception (client, mocks) {
         return async (event) => {
             const responseHeaders = event.responseHeaders.reduce((headers, { name, value }) => {
